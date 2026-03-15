@@ -43,7 +43,7 @@ html {
 }
 
 body {
-  padding-top: 70px;
+  padding-top: 142px; /* topbar ~32px + header ~70px + buffer */
   position: relative;
   z-index: 0;
   font-family: 'Barlow', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -166,12 +166,17 @@ footer,
   text-transform: uppercase;
   line-height: 1.4;
   word-break: break-word;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1001;
 }
 
 /* ── Header / Nav ───────────────────────────────────── */
 header {
   position: fixed;
-  top: 0;
+  top: 32px;
   left: 0;
   width: 100%;
 
@@ -222,10 +227,10 @@ nav {
 }
 
 .nav-logo img{
-  height: 90px;
+  height: 48px;
   width: auto;
-  max-width: 200px;
-  object-fit: cover;
+  max-width: 160px;
+  object-fit: contain;
   display: block;
   transition: transform 0.25s ease, filter 0.25s ease;
 }
