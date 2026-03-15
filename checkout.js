@@ -15,7 +15,7 @@ function playSound_checkout() {
 /* ══════════════════════════════════════
    CATÁLOGO DE PRODUCTOS (espejo de main.js)
    Se usa para rehidratar el carrito desde
-   sessionStorage sin depender del HTML serializado.
+   localStorage sin depender del HTML serializado.
 ══════════════════════════════════════ */
 const STORE_PRODUCTS = [
   {
@@ -66,13 +66,13 @@ const STORE_PRODUCTS = [
 ];
 
 /* ══════════════════════════════════════
-   REHIDRATAR CARRITO DESDE sessionStorage
+   REHIDRATAR CARRITO DESDE localStorage
 ══════════════════════════════════════ */
 const fmt = n => '$' + Number(n || 0).toLocaleString('es-CL');
 
 let cart = (() => {
   try {
-    const raw = sessionStorage.getItem('motovibes_cart');
+    const raw = localStorage.getItem('motovibes_cart');
     if (!raw) return [];
     const saved = JSON.parse(raw);
     return saved
@@ -103,7 +103,7 @@ function checkoutChangeQty(id, delta) {
   if (item.qty <= 0) {
     cart = cart.filter(x => x.id !== id);
   }
-  sessionStorage.setItem('motovibes_cart', JSON.stringify(
+  localStorage.setItem('motovibes_cart', JSON.stringify(
     cart.map(({ id, qty }) => ({ id, qty }))
   ));
   renderCheckout();
@@ -111,7 +111,7 @@ function checkoutChangeQty(id, delta) {
 
 function checkoutRemove(id) {
   cart = cart.filter(x => x.id !== id);
-  sessionStorage.setItem('motovibes_cart', JSON.stringify(
+  localStorage.setItem('motovibes_cart', JSON.stringify(
     cart.map(({ id, qty }) => ({ id, qty }))
   ));
   renderCheckout();
