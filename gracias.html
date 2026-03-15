@@ -105,7 +105,7 @@
     }
     .tg-code-group-badges {
       display:flex;
-      flex-wrap:wrap;
+      flex-direction:column;
       gap:.5rem;
       margin-top:.5rem;
     }
@@ -215,7 +215,7 @@
 
       card.innerHTML = `
         <div class="tg-head">
-          <p class="tg-kicker">¡Compra confirmada!</p>
+          <p class="tg-kicker">¡Compra confirmada! · Pedido <span style="color:var(--rojo)">#${orden.numero_pedido}</span></p>
           <h1 class="tg-title">Tus <span>códigos</span></h1>
           <p class="tg-sub">
             Guárdalos bien, los necesitarás el día del sorteo.<br>
@@ -266,7 +266,7 @@
       }
       try {
         const res = await fetch(
-          `${SUPABASE_URL}/rest/v1/ordenes?token=eq.${token}&select=email,nombre,total,codigos`,
+          `${SUPABASE_URL}/rest/v1/ordenes?token=eq.${token}&select=email,nombre,total,codigos,numero_pedido`,
           {
             headers: {
               'apikey':        SUPABASE_KEY,
