@@ -816,7 +816,7 @@ footer {
   display: none;
   position: fixed; inset: 0;
   background: rgba(0,0,0,0.75);
-  z-index: 400;
+  z-index: 2000;
   -webkit-backdrop-filter: blur(4px);
           backdrop-filter: blur(4px);
 }
@@ -828,7 +828,7 @@ footer {
   width: 390px;
   max-width: 94vw;
   background: rgba(20,20,20,0.96);
-  z-index: 500;
+  z-index: 2100;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
