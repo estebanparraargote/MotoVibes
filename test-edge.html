@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Edge Function — MotoVibes</title>
+  <style>
+    body { background:#0a0a0a; color:#fff; font-family:Arial,sans-serif; padding:2rem; max-width:600px; margin:0 auto; }
+    h2 { color:#cc0000; }
+    button {
+      background:#cc0000; color:#fff; border:none; padding:14px 28px;
+      border-radius:8px; font-size:1rem; font-weight:700; cursor:pointer; width:100%; margin-top:1rem;
+    }
+    button:hover { background:#aa0000; }
+    button:disabled { opacity:.5; cursor:not-allowed; }
+    #resultado {
+      margin-top:1.5rem; background:#111; border:1px solid #333;
+      border-radius:8px; padding:1rem; white-space:pre-wrap; font-family:monospace;
+      font-size:.85rem; display:none;
+    }
+    #resultado.ok  { border-color:#2ecc71; color:#2ecc71; }
+    #resultado.err { border-color:#e74c3c; color:#e74c3c; }
+    label { display:block; margin-top:1rem; color:#aaa; font-size:.9rem; margin-bottom:.3rem; }
+    input {
+      width:100%; padding:.7rem 1rem; background:#111; border:1px solid #333;
+      border-radius:6px; color:#fff; font-size:.95rem; box-sizing:border-box;
+    }
+  </style>
+</head>
+<body>
+  <h2>🏍️ Test — confirmar-orden</h2>
+  <p style="color:#aaa;font-size:.9rem">Esta página llama directamente a la Edge Function para probar que genera códigos y envía el correo.</p>
+
+  <label>Tu correo (donde llegará el email de prueba)</label>
+  <input type="email" id="inp-email" value="estebanparra.argote@gmail.com">
+
+  <label>Tu nombre</label>
+  <input type="text" id="inp-nombre" value="Esteban Test">
+
+  <button id="btn" onclick="probar()">🚀 Enviar orden de prueba</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    const EDGE_URL = 'https://schktmtqkufhdolhindw.supabase.co/functions/v1/confirmar-orden'
+
+    async function probar() {
+      const btn = document.getElementById('btn')
+      const res = document.getElementById('resultado')
+      const email = document.getElementById('inp-email').value
+      const nombre = document.getElementById('inp-nombre').value
+
+      btn.disabled = true
+      btn.textContent = '⏳ Enviando...'
+      res.style.display = 'none'
+      res.className = ''
+
+      try {
+        const r = await fetch(EDGE_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjaGt0bXRxa3VmaGRvbGhpbmR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1MjgyODksImV4cCI6MjA4OTEwNDI4OX0.HtpsxvcD_zYEIViyZJjSMZGqa5bg1umWpSTobdDYP0w' },
+          body: JSON.stringify({
+            email,
+            nombre,
+            telefono: '+56912345678',
+            region:   'Metropolitana de Santiago',
+            ciudad:   'Santiago',
+            comuna:   'Providencia',
+            direccion:'Av. Test 123',
+            total:    13000,
+            productos: [
+              { id: 'sticker-1', n: 'Sticker individual', p: 3000, qty: 1 },
+              { id: 'sticker-2', n: 'Sticker Dúo',        p: 5000, qty: 1 },
+              { id: 'pack-5',   n: 'Pack de 5 stickers',  p: 10000, qty: 1 }
+            ]
+          })
+        })
+
+        const data = await r.json()
+
+        if (data.ok) {
+          res.className = 'ok'
+          res.style.display = 'block'
+          res.textContent = '✅ ¡Éxito!\n\nToken: ' + data.token + '\n\nCódigos generados:\n' +
+            data.codigos.map(c => `  ${c.nombre}: ${c.codigo}`).join('\n') +
+            '\n\n👉 Abre gracias.html?token=' + data.token
+
+          // Agregar botón para abrir gracias.html
+          const link = document.createElement('a')
+          link.href = 'gracias.html?token=' + data.token
+          link.textContent = '→ Ver página de confirmación'
+          link.style.cssText = 'display:block;margin-top:1rem;color:#cc0000;font-weight:700;'
+          res.appendChild(link)
+        } else {
+          res.className = 'err'
+          res.style.display = 'block'
+          res.textContent = '❌ Error:\n' + JSON.stringify(data, null, 2)
+        }
+
+      } catch(err) {
+        res.className = 'err'
+        res.style.display = 'block'
+        res.textContent = '❌ Error de conexión:\n' + err.message
+      }
+
+      btn.disabled = false
+      btn.textContent = '🚀 Enviar orden de prueba'
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <title>MotoVibes - MotoVibes.cl</title>
+
+  <meta name="description" content="Compra stickers y participa por una honda Navi">
+  <meta name="theme-color" content="#CC0000">
+
+  <meta property="og:title" content="MotoVibes">
+  <meta property="og:description" content="Ilustraciones digitales exclusivas de Honda Navi. Hecho en Chile.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap"
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+  >
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  </noscript>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a href="#contenido-principal" class="skip">Saltar al contenido principal</a>
+
+<!-- ══ TOPBAR ══════════════════════════════════════════ -->
+<div class="topbar" role="complementary" aria-label="Información de la tienda">
+  🏍️&nbsp; Participa por tu Navi · Pago seguro Flow ·  &nbsp;🏍️
+</div>
+
+<!-- ══ HEADER ══════════════════════════════════════════ -->
+<header role="banner">
+  <nav aria-label="Navegación principal">
+    <a href="#" class="nav-logo" aria-label="MotoVibes — Inicio">
+      <img src="images/Logo1.png" alt="MotoVibes logo">
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#como-funciona">¿Cómo funciona?</a></li>
+      <li><a href="#pago-flow">Pago Flow</a></li>
+    </ul>
+
+    <button
+      class="cart-btn"
+      id="cart-open"
+      type="button"
+      aria-label="Abrir carrito de compras"
+      aria-expanded="false"
+      aria-controls="sidebar"
+    >
+      🛒 Carrito
+      <span class="cart-badge" id="cart-badge" aria-live="polite" aria-atomic="true">0</span>
+    </button>
+  </nav>
+</header>
+
+<!-- ══ CONTENIDO PRINCIPAL ══════════════════════════════ -->
+<main id="contenido-principal">
+
+  <!-- ── Hero ─────────────────────────────────────────── -->
+  <section class="hero" aria-labelledby="hero-titulo">
+    <div class="hero-inner hero-centered">
+      <div class="hero-logo-wrap" aria-hidden="true">
+        <div class="hero-box">
+          <img src="images/Logo1.png" alt="MotoVibes Logo" style="width:100%;height:100%;object-fit:contain;border-radius:inherit;z-index:1;">
+        </div>
+      </div>
+
+      <div class="hero-eyebrow" aria-hidden="true">🔥 Fecha de sorteo: DD.MM.YYYY</div>
+
+      <h1 class="hero-title" id="hero-titulo">
+        Moto<span class="accent">Vibes</span>
+        <span class="sub">Compra tus stickers y participa automáticamente por una Honda Navi</span>
+      </h1>
+
+      <div class="hero-ctas">
+        <a href="#stickers" class="btn-p">🔥 Comprar Stickers</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Carrusel ─────────────────────────────────────── -->
+  <section class="carousel-wrap" aria-label="Galería de ilustraciones disponibles" aria-roledescription="carrusel">
+    <p class="carousel-label">— <em>Stickers</em> · naviverso —</p>
+    <div class="carousel-inner">
+      <div class="carousel-track" id="carousel-track" role="list"></div>
+    </div>
+  </section>
+
+  <!-- ── Stickers pricing ──────────────────────────────── -->
+  <section id="stickers" class="stickers-sect reveal" aria-labelledby="stickers-titulo">
+    <div class="stickers-inner">
+      <div class="s-eye" aria-hidden="true">
+        <div class="s-line"></div>
+        <span class="s-tag">Participa por una Navi</span>
+        <div class="s-line"></div>
+      </div>
+      <h2 class="s-title" id="stickers-titulo">Compra tus Stickers Hoy</h2>
+      <p class="s-subt">El link de descarga de tus stickers te llegará por correo posterior a realizada la compra.</p>
+
+      <div class="stickers-grid" role="list">
+
+        <!-- Unidad -->
+        <div class="scard reveal" role="listitem">
+          <div class="scard-bg">
+            <img src="images/Navi Portada.png" alt="Sticker individual">
+            <div class="scard-overlay"></div>
+          </div>
+          <div class="scard-badge">Económico</div>
+          <div class="scard-content">
+            <div class="scard-tier">Unidad</div>
+            <div class="scard-qty">1x Sticker</div>
+            <div class="scard-price">$3.000</div>
+          </div>
+          <button class="scard-btn" onclick="addToCart('sticker-1')" type="button">
+            Comprar Sticker
+          </button>
+        </div>
+
+        <!-- Duo -->
+        <div class="scard reveal" role="listitem">
+          <div class="scard-bg">
+            <img src="images/Navi Portada.png" alt="Sticker individual">
+            <div class="scard-overlay"></div>
+          </div>
+          <div class="scard-badge">Conveniente</div>
+          <div class="scard-content">
+            <div class="scard-tier">Dúo</div>
+            <div class="scard-qty">2x Stickers</div>
+            <div class="scard-price">$5.000</div>
+            <div class="scard-saving">Ahorras $1.000</div>
+          </div>
+          <button class="scard-btn" onclick="addToCart('sticker-2')" type="button">
+            Comprar Sticker
+          </button>
+        </div>
+
+        <!-- Pack x5 -->
+        <div class="scard scard-featured" role="listitem">
+          <div class="scard-bg">
+            <img src="images/Navi Portada.png" alt="Pack 4 stickers ">
+            <div class="scard-overlay"></div>
+          </div>
+          <div class="scard-badge scard-badge-hot">🔥 Más Vendido</div>
+          <div class="scard-content">
+            <div class="scard-tier">Pack X5</div>
+            <div class="scard-qty">5x Stickers</div>
+            <div class="scard-price">$10.000</div>
+            <div class="scard-saving">Ahorras $5.000</div>
+          </div>
+          <button class="scard-btn scard-btn-red" onclick="addToCart('pack-5')" type="button">
+            Comprar Stickers
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Cómo funciona ─────────────────────────────────── -->
+  <section id="como-funciona" class="how" aria-labelledby="how-titulo">
+    <div class="how-inner">
+      <div class="s-eye" aria-hidden="true">
+        <div class="s-line"></div>
+        <span class="s-tag">Simple y rápido</span>
+        <div class="s-line"></div>
+      </div>
+      <h2 class="s-title" id="how-titulo">¿Cómo comprar?</h2>
+      <p class="s-sub">En 4 pasos simples tienes tu ilustración lista.</p>
+
+      <ul class="how-grid" aria-label="Pasos para comprar">
+        <li class="step reveal">
+          <div class="step-bg-num" aria-hidden="true">01</div>
+          <div class="step-ico" aria-hidden="true">🎨</div>
+          <h3>Elige tu sticker</h3>
+          <p>Selecciona la opción de sticker individual o el pack</p>
+        </li>
+        <li class="step reveal">
+          <div class="step-bg-num" aria-hidden="true">02</div>
+          <div class="step-ico" aria-hidden="true">🛒</div>
+          <h3>Abre el carrito</h3>
+          <p>El carrito se abre al costado izquierdo. Revisa tu selección y el total.</p>
+        </li>
+        <li class="step reveal">
+          <div class="step-bg-num" aria-hidden="true">03</div>
+          <div class="step-ico" aria-hidden="true">💳</div>
+          <h3>Paga con Flow</h3>
+          <p>Haz clic en "Pagar con Flow" y completa tu pago con tarjeta o transferencia.</p>
+        </li>
+        <li class="step reveal">
+          <div class="step-bg-num" aria-hidden="true">04</div>
+          <div class="step-ico" aria-hidden="true">📥</div>
+          <h3>Recibe tus stickers</h3>
+          <p>Confirmado el pago, te llegará el link de descarga de los stickers al correo electrónico.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Pago Flow ─────────────────────────────────────── -->
+  <section id="pago-flow" class="flow-sect" aria-labelledby="flow-titulo">
+    <div class="flow-inner">
+      <div class="flow-txt">
+        <div class="s-eye" aria-hidden="true" style="justify-content:flex-start;margin-bottom:0.5rem">
+          <span class="s-tag">Pago seguro</span>
+        </div>
+        <h2 class="s-title" id="flow-titulo">
+          Pagamos con <span style="color:var(--rojo)">Flow</span>
+        </h2>
+        <p>Flow es la plataforma de pagos online más utilizada en Chile. Acepta tarjetas de crédito, débito y transferencias de todos los bancos chilenos.</p>
+        <p>Tu pago está protegido con cifrado SSL. Nunca guardamos datos de tu tarjeta.</p>
+        <a href="#stickers" class="btn-p" style="margin-top:0.75rem">Comprar ahora</a>
+      </div>
+
+      <div class="flow-cards" role="list" aria-label="Métodos de pago aceptados">
+        <div class="fcard" role="listitem">
+          <div class="fcard-ico" aria-hidden="true">💳</div>
+          <div>
+            <h4>Tarjetas crédito y débito</h4>
+            <p>Visa, Mastercard, AmEx — todos los bancos de Chile.</p>
+          </div>
+        </div>
+        <div class="fcard" role="listitem">
+          <div class="fcard-ico" aria-hidden="true">🏦</div>
+          <div>
+            <h4>Transferencia bancaria</h4>
+            <p>BancoEstado, BCI, Santander, Banco de Chile, Itaú y más.</p>
+          </div>
+        </div>
+        <div class="fcard" role="listitem">
+          <div class="fcard-ico" aria-hidden="true">🔒</div>
+          <div>
+            <h4>Pago 100% seguro</h4>
+            <p>Cifrado SSL, sin guardar datos de tarjeta. Certificado por Flow.</p>
+          </div>
+        </div>
+        <div class="fcard" role="listitem">
+          <div class="fcard-ico" aria-hidden="true">⚡</div>
+          <div>
+            <h4>Confirmación instantánea</h4>
+            <p>Recibes confirmación al instante y tu pedido se procesa de inmediato.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══════════════════════════════════════════ -->
+<footer role="contentinfo">
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <a href="#" class="nav-logo" aria-label="MotoVibes — Inicio">
+        <img src="images/Logo1.png" alt="MotoVibes logo">
+      </a>
+      <p>El sorteo se realiza entre todas las compras registradas antes de la fecha indicada.</p>
+      <nav class="soc-row" aria-label="Redes sociales">
+        <a href="https://www.instagram.com/motovibes.cl?igsh=ZWE2M2V4dHNpMzU1" class="soc" aria-label="Síguenos en Instagram" target="_blank" rel="noopener noreferrer"><img src="images/ig.png" alt="Instagram" style="object-fit:contain;"></a>
+        <a href="#" class="soc" aria-label="Contáctanos por WhatsApp" target="_blank" rel="noopener noreferrer"><img src="images/wha.png" alt="Whatsapp" style="object-fit:contain;"></a>
+        <a href="https://www.tiktok.com/@motovibescl?_r=1&_t=ZS-94eezN1CpwV" class="soc" aria-label="Síguenos en TikTok" target="_blank" rel="noopener noreferrer"><img src="images/tt.png" alt="Tiktok" style="object-fit:contain;"></a>
+        <a href="#" class="soc" aria-label="Síguenos en Facebook" target="_blank" rel="noopener noreferrer"><img src="images/fb.png" alt="Facebook" style="object-fit:contain;"></a>
+      </nav>
+    </div>
+
+    <nav class="foot-col" aria-label="Links de tienda">
+      <h4>Tienda</h4>
+      <ul>
+        <li><a href="#como-funciona">Cómo comprar</a></li>
+        <li><a href="#pago-flow">Pago Flow</a></li>
+      </ul>
+    </nav>
+
+    <nav class="foot-col" aria-label="Links de ayuda">
+      <h4>Ayuda</h4>
+      <ul>
+        <li><a href="#">Contacto</a></li>
+        <li><a href="#">Bases legales</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="foot-bottom">
+    <span>Copyright © 2026 MotoVibes</span>
+    <span>🔒 Pagos procesados por <a href="https://www.flow.cl" target="_blank" rel="noopener noreferrer" style="color:var(--gris-txt);text-decoration:underline">Flow</a></span>
+  </div>
+</footer>
+
+<!-- ══ SIDEBAR CARRITO ══════════════════════════════════ -->
+<div class="backdrop" id="backdrop" role="presentation" aria-hidden="true"></div>
+
+<aside
+  class="sidebar"
+  id="sidebar"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Carrito de compras"
+  aria-hidden="true"
+>
+  <div class="sb-head">
+    <div class="sb-head-l">
+      <h2>Carrito</h2>
+      <span class="sb-count" id="sb-count" aria-live="polite" aria-atomic="true">0 items</span>
+    </div>
+    <button class="sb-close" id="cart-close" type="button" aria-label="Cerrar carrito">✕</button>
+  </div>
+
+  <div class="sb-body" id="sb-body">
+    <div class="sb-empty" id="sb-empty" role="status">
+      <div class="sb-empty-icon" aria-hidden="true">🛒</div>
+      <p>
+        Tu carrito está vacío.<br>
+        <a href="#" id="empty-link">Explora la colección&nbsp;→</a>
+      </p>
+    </div>
+    <div id="sb-items" aria-live="polite" aria-label="Productos en el carrito"></div>
+  </div>
+
+  <div class="sb-foot" id="sb-foot" style="display:none">
+    <div class="sum-row">
+      <span>Subtotal</span>
+      <span id="sum-sub">$0</span>
+    </div>
+    <div class="sum-row">
+      <span>Envío digital</span>
+      <span style="color:#6bcb77">Gratis</span>
+    </div>
+    <div class="sum-row tot">
+      <span>Total</span>
+      <span class="sum-tot-val" id="sum-tot">$0</span>
+    </div>
+
+    <!-- ⚠️ URL debe generarse desde el servidor con la API Key de Flow en producción -->
+    <a
+      href="#"
+      id="flow-pay-btn"
+      class="flow-btn"
+      role="button"
+      aria-label="Ir a pagar"
+      target="_blank"
+    >
+      💳&nbsp; Pagar
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+
+    <div class="flow-secure" aria-label="Información de seguridad">
+      🔒 Pago seguro y encriptado · Flow Chile
+    </div>
+
+    <button class="cont-btn" id="cont-btn" type="button">← Seguir explorando</button>
+  </div>
+</aside>
+
+<!-- ══ TOAST ════════════════════════════════════════════ -->
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
+  <span id="toast-msg"></span>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

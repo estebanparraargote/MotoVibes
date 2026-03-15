@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compra confirmada | MotoVibes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .thanks-wrap {
+      min-height: calc(100vh - 70px);
+      display: grid;
+      place-items: start center;
+      padding: 2rem 1rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+    .thanks-card {
+      max-width: 760px;
+      width: 100%;
+      background: rgba(20,20,20,.88);
+      border: 1px solid var(--gris-bor);
+      border-radius: var(--rad-xl);
+      padding: 2rem;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+    .tg-loading { text-align:center; padding:3rem 1rem; }
+    .tg-spinner {
+      width:48px; height:48px;
+      border:3px solid rgba(204,0,0,.2);
+      border-top-color:var(--rojo);
+      border-radius:50%;
+      animation:spin .8s linear infinite;
+      margin:0 auto 1rem;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .tg-error { text-align:center; padding:2rem 1rem; }
+    .tg-error-icon { font-size:3rem; margin-bottom:1rem; }
+    .tg-head {
+      text-align:center;
+      margin-bottom:2rem;
+      padding-bottom:1.5rem;
+      border-bottom:1px solid var(--gris-bor);
+    }
+    .tg-kicker {
+      color:var(--rojo);
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:.72rem;
+      font-weight:800;
+      margin-bottom:.5rem;
+    }
+    .tg-title {
+      font-family:'Bebas Neue',Impact,sans-serif;
+      font-size:clamp(2.5rem,7vw,5rem);
+      line-height:.95;
+      margin-bottom:.5rem;
+    }
+    .tg-title span { color:var(--rojo); }
+    .tg-sub { color:var(--gris-txt); font-size:.95rem; line-height:1.6; }
+    .tg-buyer {
+      background:rgba(10,10,10,.5);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:var(--rad-lg);
+      padding:1rem 1.25rem;
+      margin-bottom:1.5rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:.5rem;
+    }
+    .tg-buyer-name { font-weight:700; font-size:1rem; }
+    .tg-buyer-email { color:var(--gris-txt); font-size:.88rem; }
+    .tg-total { font-family:'Bebas Neue',Impact,sans-serif; font-size:1.6rem; color:var(--rojo); letter-spacing:.04em; }
+    .tg-codes-title {
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:1.1rem;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      color:var(--gris-txt);
+      margin-bottom:.75rem;
+    }
+    .tg-codes { display:grid; gap:.6rem; margin-bottom:1.5rem; }
+    .tg-code-row {
+      display:grid;
+      grid-template-columns:1fr auto;
+      align-items:center;
+      gap:1rem;
+      background:rgba(10,10,10,.6);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:var(--rad-md);
+      padding:.75rem 1rem;
+    }
+    .tg-code-product { font-size:.88rem; color:var(--gris-txt); }
+    .tg-code-badge {
+      font-family:'Courier New',monospace;
+      font-size:1.1rem;
+      font-weight:700;
+      letter-spacing:.18em;
+      color:var(--rojo);
+      background:rgba(204,0,0,.1);
+      border:1px solid rgba(204,0,0,.35);
+      border-radius:6px;
+      padding:.3rem .8rem;
+      white-space:nowrap;
+    }
+    .tg-notice {
+      background:rgba(204,0,0,.07);
+      border:1px solid rgba(204,0,0,.25);
+      border-radius:var(--rad-lg);
+      padding:1rem 1.25rem;
+      margin-bottom:1.5rem;
+      font-size:.92rem;
+      color:var(--gris-txt);
+      line-height:1.6;
+    }
+    .tg-notice strong { color:var(--blanco); }
+    .tg-actions { display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; }
+    .btn-copy {
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--gris-bor);
+      color:var(--blanco);
+      padding:.75rem 1.5rem;
+      border-radius:var(--rad-md);
+      font-family:'Barlow',sans-serif;
+      font-size:.95rem;
+      font-weight:700;
+      cursor:pointer;
+      transition:background .2s, border-color .2s;
+    }
+    .btn-copy:hover { background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3); }
+    .btn-copy.copied { border-color:#2ecc71; color:#2ecc71; }
+    @media (max-width:520px) {
+      .tg-code-row { grid-template-columns:1fr; }
+      .tg-buyer { flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">✅ Compra confirmada · MotoVibes 🏍️</div>
+  <header role="banner">
+    <nav aria-label="Navegación principal">
+      <a href="index.html" class="nav-logo" aria-label="MotoVibes — Inicio">
+        <img src="images/Logo1.png" alt="MotoVibes logo">
+      </a>
+    </nav>
+  </header>
+
+  <main class="thanks-wrap">
+    <div class="thanks-card" id="thanks-card">
+      <div class="tg-loading" id="state-loading">
+        <div class="tg-spinner"></div>
+        <p style="color:var(--gris-txt)">Cargando tu orden...</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const SUPABASE_URL = 'https://schktmtqkufhdolhindw.supabase.co'
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjaGt0bXRxa3VmaGRvbGhpbmR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1MjgyODksImV4cCI6MjA4OTEwNDI4OX0.HtpsxvcD_zYEIViyZJjSMZGqa5bg1umWpSTobdDYP0w'
+    const fmt = n => '$' + Number(n || 0).toLocaleString('es-CL')
+
+    const params = new URLSearchParams(window.location.search)
+    const token  = params.get('token')
+    const card   = document.getElementById('thanks-card')
+
+    function renderError(msg) {
+      card.innerHTML = `
+        <div class="tg-error">
+          <div class="tg-error-icon">😕</div>
+          <h2 style="margin:0 0 .5rem">Algo salió mal</h2>
+          <p style="color:var(--gris-txt);margin:0 0 1.5rem">${msg}</p>
+          <a href="index.html" class="btn-p">Volver a la tienda</a>
+        </div>`
+    }
+
+    function renderOrden(orden) {
+      const codigosHtml = orden.codigos.map(c => `
+        <div class="tg-code-row">
+          <span class="tg-code-product">${c.nombre}</span>
+          <span class="tg-code-badge">${c.codigo}</span>
+        </div>`).join('')
+
+      const textoCodigos = encodeURIComponent(
+        orden.codigos.map(c => `${c.nombre}: ${c.codigo}`).join('\n')
+      )
+
+      card.innerHTML = `
+        <div class="tg-head">
+          <p class="tg-kicker">¡Compra confirmada!</p>
+          <h1 class="tg-title">Tus <span>códigos</span></h1>
+          <p class="tg-sub">
+            Guárdalos bien, los necesitarás el día del sorteo.<br>
+            También los recibiste en tu correo <strong>${orden.email}</strong>.
+          </p>
+        </div>
+        <div class="tg-buyer">
+          <div>
+            <div class="tg-buyer-name">${orden.nombre ?? orden.email}</div>
+            <div class="tg-buyer-email">${orden.email}</div>
+          </div>
+          <div class="tg-total">CLP ${fmt(orden.total)}</div>
+        </div>
+        <p class="tg-codes-title">🎫 Tus códigos de participación</p>
+        <div class="tg-codes">${codigosHtml}</div>
+        <div class="tg-notice">
+          <strong>🏍️ ¿Cómo funciona el sorteo?</strong><br>
+          Cada sticker tiene un código único asociado a tu nombre.
+          El día del sorteo se sorteará uno de estos códigos al azar.
+          Si el tuyo es elegido, ¡te llevas la moto!
+        </div>
+        <div class="tg-actions">
+          <button class="btn-copy" onclick="copiarCodigos('${textoCodigos}', this)">
+            📋 Copiar mis códigos
+          </button>
+          <a href="index.html" class="btn-p">Volver a la tienda</a>
+        </div>`
+    }
+
+    function copiarCodigos(encoded, btn) {
+      navigator.clipboard.writeText(decodeURIComponent(encoded)).then(() => {
+        btn.textContent = '✅ Copiado'
+        btn.classList.add('copied')
+        setTimeout(() => {
+          btn.textContent = '📋 Copiar mis códigos'
+          btn.classList.remove('copied')
+        }, 2500)
+      })
+    }
+
+    async function cargarOrden() {
+      if (!token) {
+        renderError('No se encontró el token de la orden. ¿Llegaste aquí directamente?')
+        return
+      }
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/ordenes?token=eq.${token}&select=email,nombre,total,codigos`,
+          {
+            headers: {
+              'apikey':        SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`,
+            }
+          }
+        )
+        if (!res.ok) throw new Error('Error consultando la orden')
+        const data = await res.json()
+        if (!data.length) {
+          renderError('No encontramos una orden con ese token. Revisa el enlace o contacta soporte.')
+          return
+        }
+        renderOrden(data[0])
+      } catch (err) {
+        console.error(err)
+        renderError('Error al cargar la orden. Intenta recargar la página.')
+      }
+    }
+
+    cargarOrden()
+  </script>
+</body>
+</html>

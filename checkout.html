@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="images/favicon.PNG">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | MotoVibes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="checkout.css">
+</head>
+<body class="checkout-body">
+  <div class="topbar">🏍️ Pago seguro · Checkout MotoVibes · Flow 🏍️</div>
+
+  <header role="banner">
+    <nav aria-label="Navegación principal">
+      <a href="index.html" class="nav-logo" aria-label="MotoVibes — Inicio">
+        <img src="images/Logo1.png" alt="MotoVibes logo">
+      </a>
+
+      <a href="index.html" class="btn-p checkout-back">← Volver a la tienda</a>
+    </nav>
+  </header>
+
+  <main class="checkout-page">
+    <section class="checkout-shell">
+      <div class="checkout-left">
+        <div class="checkout-head reveal visible">
+          <p class="checkout-kicker">Finaliza tu compra</p>
+          <h1 class="checkout-title">Checkout <span>seguro</span></h1>
+          <p class="checkout-sub">Completa tus datos para continuar con el pago de tus stickers.</p>
+        </div>
+
+        <form id="checkout-form" class="checkout-card reveal visible">
+          <div class="form-block">
+            <h2>Contacto</h2>
+            <input type="email" name="email" placeholder="Correo electrónico" required>
+
+            <label class="check-row">
+              <input type="checkbox" name="terms" required>
+              <span>Acepto términos y condiciones</span>
+            </label>
+          </div>
+
+          <div class="form-block">
+            <h2>Pago</h2>
+            <p class="pay-note">Todas las transacciones son seguras y están encriptadas.</p>
+
+            <div class="pay-method active">
+              <div class="pay-method-top">
+                <span>Paga con tarjeta débito y crédito</span>
+                <div class="pay-badges">
+                  <span>flow</span>
+                  <span>VISA</span>
+                  <span>MC</span>
+                  <span>+3</span>
+                </div>
+              </div>
+              <p>Serás redirigido para completar tu pago de forma segura.</p>
+            </div>
+          </div>
+
+          <div class="form-block">
+            <h2>Dirección de facturación</h2>
+
+            <div class="grid-1">
+              <input type="hidden" name="country" value="Chile">
+              <div class="country-static">Chile</div>
+            </div>
+
+            <div class="grid-2">
+              <input type="text" name="nombre" placeholder="Nombre" required>
+              <input type="text" name="apellidos" placeholder="Apellidos" required>
+            </div>
+
+            <div class="grid-1">
+              <input type="text" name="direccion" placeholder="Dirección" required>
+            </div>
+
+            <div class="grid-1">
+              <select name="region" id="sel-region" required>
+                <option value="">Selecciona una región</option>
+              </select>
+            </div>
+
+            <div class="grid-2">
+              <select name="ciudad" id="sel-ciudad" required disabled>
+                <option value="">Primero elige región</option>
+              </select>
+              <select name="comuna" id="sel-comuna" required disabled>
+                <option value="">Primero elige ciudad</option>
+              </select>
+            </div>
+
+            <div class="grid-1">
+              <div class="phone-wrap">
+                <span class="phone-prefix">+56</span>
+                <input type="tel" name="telefono" id="inp-telefono" placeholder="9 12345678" maxlength="9" pattern="9[0-9]{8}" required>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="checkout-submit">Pagar ahora</button>
+        </form>
+      </div>
+
+      <aside class="checkout-right reveal visible">
+        <div class="summary-card">
+          <div id="checkout-items" class="summary-items"></div>
+
+          <div class="summary-totals">
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <strong id="checkout-subtotal">$0</strong>
+            </div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <strong id="checkout-total">CLP $0</strong>
+            </div>
+            <div class="summary-save" id="checkout-save"></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="checkout-geo.js"></script>
+  <script src="checkout.js"></script>
+</body>
+</html>
