@@ -85,21 +85,33 @@
       color:var(--gris-txt);
       margin-bottom:.75rem;
     }
-    .tg-codes { display:grid; gap:.6rem; margin-bottom:1.5rem; }
-    .tg-code-row {
-      display:grid;
-      grid-template-columns:1fr auto;
-      align-items:center;
-      gap:1rem;
+    .tg-codes { display:grid; gap:.8rem; margin-bottom:1.5rem; }
+    .tg-code-group {
       background:rgba(10,10,10,.6);
       border:1px solid rgba(255,255,255,.06);
       border-radius:var(--rad-md);
-      padding:.75rem 1rem;
+      padding:.9rem 1rem;
     }
-    .tg-code-product { font-size:.88rem; color:var(--gris-txt); }
+    .tg-code-group-title {
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:.95rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--gris-txt);
+      margin-bottom:.6rem;
+      padding-bottom:.5rem;
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .tg-code-group-badges {
+      display:flex;
+      flex-wrap:wrap;
+      gap:.5rem;
+      margin-top:.5rem;
+    }
     .tg-code-badge {
       font-family:'Courier New',monospace;
-      font-size:1.1rem;
+      font-size:1rem;
       font-weight:700;
       letter-spacing:.18em;
       color:var(--rojo);
@@ -180,14 +192,25 @@
     }
 
     function renderOrden(orden) {
-      const codigosHtml = orden.codigos.map(c => `
-        <div class="tg-code-row">
-          <span class="tg-code-product">${c.nombre}</span>
-          <span class="tg-code-badge">${c.codigo}</span>
+      // Agrupar códigos por producto
+      const grupos = {}
+      orden.codigos.forEach(c => {
+        if (!grupos[c.nombre]) grupos[c.nombre] = []
+        grupos[c.nombre].push(c.codigo)
+      })
+
+      const codigosHtml = Object.entries(grupos).map(([nombre, codigos]) => `
+        <div class="tg-code-group">
+          <div class="tg-code-group-title">${nombre}</div>
+          <div class="tg-code-group-badges">
+            ${codigos.map(cod => `<span class="tg-code-badge">${cod}</span>`).join('')}
+          </div>
         </div>`).join('')
 
       const textoCodigos = encodeURIComponent(
-        orden.codigos.map(c => `${c.nombre}: ${c.codigo}`).join('\n')
+        Object.entries(grupos).map(([nombre, codigos]) =>
+          nombre + ':\n' + codigos.map(c => '  ' + c).join('\n')
+        ).join('\n\n')
       )
 
       card.innerHTML = `
