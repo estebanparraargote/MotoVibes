@@ -15,7 +15,7 @@ function playSound_checkout() {
 /* ══════════════════════════════════════
    CATÁLOGO DE PRODUCTOS (espejo de main.js)
    Se usa para rehidratar el carrito desde
-   localStorage sin depender del HTML serializado.
+   sessionStorage sin depender del HTML serializado.
 ══════════════════════════════════════ */
 const STORE_PRODUCTS = [
   {
@@ -66,13 +66,13 @@ const STORE_PRODUCTS = [
 ];
 
 /* ══════════════════════════════════════
-   REHIDRATAR CARRITO DESDE localStorage
+   REHIDRATAR CARRITO DESDE sessionStorage
 ══════════════════════════════════════ */
 const fmt = n => '$' + Number(n || 0).toLocaleString('es-CL');
 
 let cart = (() => {
   try {
-    const raw = localStorage.getItem('motovibes_cart');
+    const raw = sessionStorage.getItem('motovibes_cart');
     if (!raw) return [];
     const saved = JSON.parse(raw);
     return saved
@@ -103,7 +103,7 @@ function checkoutChangeQty(id, delta) {
   if (item.qty <= 0) {
     cart = cart.filter(x => x.id !== id);
   }
-  localStorage.setItem('motovibes_cart', JSON.stringify(
+  sessionStorage.setItem('motovibes_cart', JSON.stringify(
     cart.map(({ id, qty }) => ({ id, qty }))
   ));
   renderCheckout();
@@ -111,7 +111,7 @@ function checkoutChangeQty(id, delta) {
 
 function checkoutRemove(id) {
   cart = cart.filter(x => x.id !== id);
-  localStorage.setItem('motovibes_cart', JSON.stringify(
+  sessionStorage.setItem('motovibes_cart', JSON.stringify(
     cart.map(({ id, qty }) => ({ id, qty }))
   ));
   renderCheckout();
@@ -186,8 +186,12 @@ function renderCheckout() {
 /* ══════════════════════════════════════
    SUBMIT DEL FORMULARIO
 ══════════════════════════════════════ */
-formEl.addEventListener('submit', e => {
+formEl.addEventListener('submit', async e => {
   e.preventDefault();
+
+  const submitBtn = formEl.querySelector('.checkout-submit');
+  submitBtn.disabled = true;
+  submitBtn.textContent = '⏳ Procesando...';
 
   // Sonido de pago confirmado
   try { playSound_checkout(); } catch(err) {}
@@ -195,12 +199,53 @@ formEl.addEventListener('submit', e => {
   const formData = new FormData(formEl);
   const customer = Object.fromEntries(formData.entries());
 
-  localStorage.setItem('motovibes_customer', JSON.stringify(customer));
+  // Calcular total desde el carrito
+  const total = cart.reduce((s, x) => s + x.p * x.qty, 0);
 
-  // Breve pausa para que el sonido se reproduzca antes de redirigir
-  setTimeout(() => {
-    window.location.href = 'gracias.html';
-  }, 3000);
+  // Preparar productos para la Edge Function
+  const productos = cart.map(x => ({ id: x.id, n: x.n, p: x.p, qty: x.qty }));
+
+  try {
+    const res = await fetch(
+      'https://schktmtqkufhdolhindw.supabase.co/functions/v1/confirmar-orden',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjaGt0bXRxa3VmaGRvbGhpbmR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1MjgyODksImV4cCI6MjA4OTEwNDI4OX0.HtpsxvcD_zYEIViyZJjSMZGqa5bg1umWpSTobdDYP0w'
+        },
+        body: JSON.stringify({
+          email:     customer.email,
+          nombre:    `${customer.nombre} ${customer.apellidos}`.trim(),
+          telefono:  customer.telefono,
+          region:    customer.region,
+          ciudad:    customer.ciudad,
+          comuna:    customer.comuna,
+          direccion: customer.direccion,
+          total,
+          productos,
+        })
+      }
+    );
+
+    const data = await res.json();
+
+    if (data.ok && data.token) {
+      // Limpiar carrito
+      localStorage.removeItem('motovibes_cart');
+
+      // Redirigir a gracias con el token
+      window.location.href = 'gracias.html?token=' + data.token;
+    } else {
+      throw new Error(data.error || 'Error procesando la orden');
+    }
+
+  } catch(err) {
+    console.error('Error:', err);
+    alert('Hubo un problema procesando tu orden. Por favor intenta nuevamente.');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Pagar ahora';
+  }
 });
 
 renderCheckout();
