@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto | MotoVibes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .contact-wrap {
+      min-height: calc(100vh - 70px);
+      display: grid;
+      place-items: start center;
+      padding: 2rem 1rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-shell {
+      max-width: 860px;
+      width: 100%;
+    }
+
+    .contact-head {
+      margin-bottom: 2rem;
+    }
+
+    .contact-kicker {
+      color: var(--rojo);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: .72rem;
+      font-weight: 800;
+      margin-bottom: .75rem;
+    }
+
+    .contact-title {
+      font-family: 'Bebas Neue', Impact, sans-serif;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      line-height: .95;
+      margin-bottom: .5rem;
+    }
+
+    .contact-title span { color: var(--rojo); }
+
+    .contact-sub {
+      color: var(--gris-txt);
+      font-size: .95rem;
+      line-height: 1.6;
+      max-width: 520px;
+    }
+
+    .contact-card {
+      background: rgba(20,20,20,.88);
+      border: 1px solid var(--gris-bor);
+      border-radius: var(--rad-xl);
+      backdrop-filter: blur(5px);
+      box-shadow: 0 24px 60px rgba(0,0,0,.35);
+      padding: 2rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-field {
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+
+    .contact-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .contact-field label {
+      font-size: .82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--gris-txt);
+    }
+
+    .contact-field input,
+    .contact-field select,
+    .contact-field textarea {
+      width: 100%;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--gris-bor);
+      color: var(--blanco);
+      border-radius: var(--rad-md);
+      padding: .9rem 1rem;
+      font-family: 'Barlow', sans-serif;
+      font-size: .95rem;
+      transition: border-color .2s;
+      box-sizing: border-box;
+    }
+
+    .contact-field input:focus,
+    .contact-field select:focus,
+    .contact-field textarea:focus {
+      outline: none;
+      border-color: var(--rojo);
+      box-shadow: 0 0 0 3px rgba(204,0,0,.15);
+    }
+
+    .contact-field input::placeholder,
+    .contact-field textarea::placeholder {
+      color: #666;
+    }
+
+    .contact-field textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    .contact-field select option { color: #000; }
+
+    .contact-submit {
+      width: 100%;
+      margin-top: 1.25rem;
+      min-height: 56px;
+      border: none;
+      border-radius: var(--rad-md);
+      background: linear-gradient(135deg, var(--rojo), var(--rojo-viv));
+      color: var(--blanco);
+      font-family: 'Barlow', sans-serif;
+      font-size: 1rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 12px 34px rgba(204,0,0,.3);
+      transition: transform .25s ease, box-shadow .25s ease, opacity .25s ease;
+      letter-spacing: .04em;
+    }
+
+    .contact-submit:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(204,0,0,.4);
+    }
+
+    .contact-submit:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    /* Estado éxito */
+    .contact-success {
+      text-align: center;
+      padding: 2.5rem 1rem;
+    }
+
+    .contact-success-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-success h2 {
+      font-family: 'Bebas Neue', Impact, sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: .5rem;
+    }
+
+    .contact-success h2 span { color: var(--rojo); }
+
+    .contact-success p {
+      color: var(--gris-txt);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    /* Estado error */
+    .contact-error-msg {
+      background: rgba(204,0,0,.1);
+      border: 1px solid rgba(204,0,0,.3);
+      border-radius: var(--rad-md);
+      padding: .75rem 1rem;
+      color: #ff6b6b;
+      font-size: .9rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .contact-error-msg.show { display: block; }
+
+    @media (max-width: 640px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-info { grid-template-columns: 1fr; }
+      .contact-card { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">🏍️ MotoVibes · Estamos para ayudarte 🏍️</div>
+
+  <header role="banner">
+    <nav aria-label="Navegación principal">
+      <a href="index.html" class="nav-logo" aria-label="MotoVibes — Inicio">
+        <img src="images/Logo1.png" alt="MotoVibes logo">
+      </a>
+      <a href="index.html" class="btn-p checkout-back">← Volver a la tienda</a>
+    </nav>
+  </header>
+
+  <main class="contact-wrap">
+    <div class="contact-shell">
+
+      <div class="contact-head reveal visible">
+        <p class="contact-kicker">¿Tienes dudas?</p>
+        <h1 class="contact-title">Contáctanos <span>aquí</span></h1>
+        <p class="contact-sub">Responderemos tu mensaje a la brevedad. También puedes escribirnos por Instagram o WhatsApp.</p>
+      </div>
+
+      <div class="contact-card reveal visible" id="contact-card">
+        <form id="contact-form">
+          <div class="contact-grid">
+            <div class="contact-field">
+              <label for="inp-nombre">Nombre</label>
+              <input type="text" id="inp-nombre" name="nombre" placeholder="Tu nombre" required>
+            </div>
+            <div class="contact-field">
+              <label for="inp-email">Correo electrónico</label>
+              <input type="email" id="inp-email" name="email" placeholder="tu@correo.com" required>
+            </div>
+            <div class="contact-field full">
+              <label for="inp-asunto">Asunto</label>
+              <select id="inp-asunto" name="asunto" required>
+                <option value="">Selecciona un asunto</option>
+                <option value="Consulta sobre stickers">Consulta sobre stickers</option>
+                <option value="Consulta sobre el sorteo">Consulta sobre el sorteo</option>
+                <option value="Problema con mi compra">Problema con mi compra</option>
+                <option value="No recibí mi correo de confirmación">No recibí mi correo de confirmación</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+            <div class="contact-field full">
+              <label for="inp-mensaje">Mensaje</label>
+              <textarea id="inp-mensaje" name="mensaje" placeholder="Cuéntanos en qué podemos ayudarte..." required></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="contact-submit" id="contact-btn">
+            Enviar mensaje 🏍️
+          </button>
+
+          <div class="contact-error-msg" id="contact-error">
+            Hubo un problema al enviar tu mensaje. Por favor intenta nuevamente.
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // Scroll header
+    window.addEventListener('scroll', () => {
+      document.querySelector('header').classList.toggle('scrolled', window.scrollY > 20)
+    })
+
+    const EDGE_URL = 'https://schktmtqkufhdolhindw.supabase.co/functions/v1/contacto'
+    const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjaGt0bXRxa3VmaGRvbGhpbmR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1MjgyODksImV4cCI6MjA4OTEwNDI4OX0.HtpsxvcD_zYEIViyZJjSMZGqa5bg1umWpSTobdDYP0w'
+
+    document.getElementById('contact-form').addEventListener('submit', async e => {
+      e.preventDefault()
+
+      const btn = document.getElementById('contact-btn')
+      const errorEl = document.getElementById('contact-error')
+      errorEl.classList.remove('show')
+      btn.disabled = true
+      btn.textContent = '⏳ Enviando...'
+
+      const data = {
+        nombre:  document.getElementById('inp-nombre').value,
+        email:   document.getElementById('inp-email').value,
+        asunto:  document.getElementById('inp-asunto').value,
+        mensaje: document.getElementById('inp-mensaje').value,
+      }
+
+      try {
+        const res = await fetch(EDGE_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${ANON_KEY}`
+          },
+          body: JSON.stringify(data)
+        })
+
+        const result = await res.json()
+
+        if (result.ok) {
+          document.getElementById('contact-card').innerHTML = `
+            <div class="contact-success">
+              <div class="contact-success-icon">🏍️</div>
+              <h2>Mensaje <span>enviado</span></h2>
+              <p>Gracias <strong>${data.nombre}</strong>, recibimos tu mensaje.<br>
+              Te responderemos a <strong>${data.email}</strong> a la brevedad.</p>
+              <a href="index.html" class="btn-p">Volver a la tienda</a>
+            </div>`
+        } else {
+          throw new Error(result.error || 'Error')
+        }
+
+      } catch(err) {
+        errorEl.classList.add('show')
+        btn.disabled = false
+        btn.textContent = 'Enviar mensaje 🏍️'
+      }
+    })
+  </script>
+</body>
+</html>
