@@ -12,7 +12,7 @@
   <meta name="theme-color" content="#CC0000">
 
   <meta property="og:title" content="MotoVibes">
-  <meta property="og:description" content="Compra tus stickers y participa por una Honda Navi.">
+  <meta property="og:description" content="Ilustraciones digitales exclusivas de Honda Navi. Hecho en Chile.">
   <meta property="og:type" content="website">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -76,7 +76,29 @@
         </div>
       </div>
 
-      <div class="hero-eyebrow" aria-hidden="true">🔥 Fecha de sorteo: DD.MM.YYYY</div>
+      <div class="hero-eyebrow" aria-hidden="true">🔥 Fecha de sorteo: <span id="fecha-sorteo">31.03.2026</span></div>
+
+      <div class="countdown-wrap" aria-live="polite">
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-dias">--</span>
+          <span class="countdown-label">Días</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-horas">--</span>
+          <span class="countdown-label">Horas</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-mins">--</span>
+          <span class="countdown-label">Min</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-segs">--</span>
+          <span class="countdown-label">Seg</span>
+        </div>
+      </div>
 
       <h1 class="hero-title" id="hero-titulo">
         Moto<span class="accent">Vibes</span>
@@ -215,7 +237,7 @@
           <span class="s-tag">Pago seguro</span>
         </div>
         <h2 class="s-title" id="flow-titulo">
-          Paga con <span style="color:var(--rojo)">Flow</span>
+          Pagamos con <span style="color:var(--rojo)">Flow</span>
         </h2>
         <p>Flow es la plataforma de pagos online más utilizada en Chile. Acepta tarjetas de crédito, débito y transferencias de todos los bancos chilenos.</p>
         <p>Tu pago está protegido con cifrado SSL. Nunca guardamos datos de tu tarjeta.</p>
@@ -269,7 +291,7 @@
         <a href="https://www.instagram.com/motovibes.cl?igsh=ZWE2M2V4dHNpMzU1" class="soc" aria-label="Síguenos en Instagram" target="_blank" rel="noopener noreferrer"><img src="images/ig.png" alt="Instagram" style="object-fit:contain;"></a>
         <a href="#" class="soc" aria-label="Contáctanos por WhatsApp" target="_blank" rel="noopener noreferrer"><img src="images/wha.png" alt="Whatsapp" style="object-fit:contain;"></a>
         <a href="https://www.tiktok.com/@motovibescl?_r=1&_t=ZS-94eezN1CpwV" class="soc" aria-label="Síguenos en TikTok" target="_blank" rel="noopener noreferrer"><img src="images/tt.png" alt="Tiktok" style="object-fit:contain;"></a>
-        <a href="https://www.facebook.com/people/MotoVibes-CL/pfbid02CbNrTkfgg6jPRytraHgs1PfW7LYH2TP4nzp7gRZ7N7oWU2v5qLJ33LovvRUWbMxHl/" class="soc" aria-label="Síguenos en Facebook" target="_blank" rel="noopener noreferrer"><img src="images/fb.png" alt="Facebook" style="object-fit:contain;"></a>
+        <a href="#" class="soc" aria-label="Síguenos en Facebook" target="_blank" rel="noopener noreferrer"><img src="images/fb.png" alt="Facebook" style="object-fit:contain;"></a>
       </nav>
     </div>
 
@@ -369,5 +391,36 @@
 </div>
 
 <script src="main.js"></script>
+
+  <script>
+    // ── CUENTA REGRESIVA ─────────────────────────────
+    // Cambia esta fecha cuando tengas la fecha real del sorteo
+    // Formato: YYYY-MM-DD HH:MM:SS
+    const FECHA_SORTEO = new Date('2026-03-31T20:00:00')
+
+    function actualizarContador() {
+      const ahora = new Date()
+      const diff  = FECHA_SORTEO - ahora
+
+      if (diff <= 0) {
+        document.querySelector('.countdown-wrap').innerHTML =
+          '<div class="countdown-fin">¡El sorteo ya ocurrió!</div>'
+        return
+      }
+
+      const dias  = Math.floor(diff / (1000 * 60 * 60 * 24))
+      const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+      const segs  = Math.floor((diff % (1000 * 60)) / 1000)
+
+      document.getElementById('cd-dias').textContent  = String(dias).padStart(2, '0')
+      document.getElementById('cd-horas').textContent = String(horas).padStart(2, '0')
+      document.getElementById('cd-mins').textContent  = String(mins).padStart(2, '0')
+      document.getElementById('cd-segs').textContent  = String(segs).padStart(2, '0')
+    }
+
+    actualizarContador()
+    setInterval(actualizarContador, 1000)
+  </script>
 </body>
 </html>

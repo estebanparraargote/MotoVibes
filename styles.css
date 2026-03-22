@@ -1561,3 +1561,66 @@ footer {
   height: auto;
   display: block;
 }
+/* ══════════════════════════════════════
+   CUENTA REGRESIVA — Hero
+══════════════════════════════════════ */
+.countdown-wrap {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: 1.25rem;
+  animation: fsu 0.7s ease both;
+  animation-delay: .15s;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .15rem;
+  background: rgba(204,0,0,.08);
+  border: 1px solid rgba(204,0,0,.3);
+  border-radius: var(--rad-md);
+  padding: .6rem .9rem;
+  min-width: 64px;
+}
+
+.countdown-num {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--blanco);
+  line-height: 1;
+  letter-spacing: .04em;
+}
+
+.countdown-label {
+  font-size: .6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--rojo);
+}
+
+.countdown-sep {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  color: var(--rojo);
+  opacity: .6;
+  line-height: 1;
+  margin-bottom: .8rem;
+}
+
+.countdown-fin {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 1.5rem;
+  color: var(--rojo);
+  letter-spacing: .06em;
+}
+
+@media (max-width: 480px) {
+  .countdown-unit {
+    min-width: 52px;
+    padding: .5rem .6rem;
+  }
+  .countdown-wrap { gap: .3rem; }
+}
