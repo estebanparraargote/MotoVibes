@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /gracias.html
+Disallow: /test-edge.html
+
+Sitemap: https://motovibes.cl/sitemap.xml
