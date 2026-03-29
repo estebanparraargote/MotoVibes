@@ -417,7 +417,7 @@
     // ── CUENTA REGRESIVA ─────────────────────────────
     // Cambia esta fecha cuando tengas la fecha real del sorteo
     // Formato: YYYY-MM-DD HH:MM:SS
-    const FECHA_SORTEO = new Date('2026-03-31T20:00:00')
+    const FECHA_SORTEO = new Date('2026-03-29T15:00:00')
 
     function actualizarContador() {
       const ahora = new Date()
@@ -442,6 +442,15 @@
 
     actualizarContador()
     setInterval(actualizarContador, 1000)
+
+    // Redirigir a sorteo-cerrado.html cuando el contador llegue a 0
+    function verificarSorteo() {
+      if (new Date() >= FECHA_SORTEO) {
+        window.location.href = 'sorteo-cerrado.html'
+      }
+    }
+    verificarSorteo()
+    setInterval(verificarSorteo, 5000) // Verifica cada 5 segundos
   </script>
 </body>
 </html>
