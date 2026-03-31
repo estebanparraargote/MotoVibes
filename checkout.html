@@ -44,7 +44,7 @@
 
             <label class="check-row">
               <input type="checkbox" name="terms" required>
-              <span>Acepto términos y condiciones</span>
+              <span>Acepto los <button type="button" class="terms-link" onclick="abrirTerminos()">términos y condiciones</button></span>
             </label>
           </div>
 
@@ -132,5 +132,61 @@
 
   <script src="checkout-geo.js"></script>
   <script src="checkout.js"></script>
+
+  <!-- ── Modal Términos y Condiciones ──────────────── -->
+  <div class="terms-overlay" id="terms-overlay" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+    <div class="terms-modal">
+      <div class="terms-header">
+        <h2 id="terms-title">Términos y Condiciones</h2>
+        <button class="terms-close" onclick="cerrarTerminos()" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="terms-body">
+
+        <section class="terms-section">
+          <h3>1. Condiciones de participación</h3>
+          <p>Al adquirir cualquier producto en MotoVibes, el comprador participa automáticamente en el sorteo de una motocicleta Honda Navi. La participación está abierta a personas mayores de 18 años residentes en Chile.</p>
+          <p>Cada sticker individual otorga <strong>1 código único</strong> de participación. El Sticker Dúo otorga <strong>2 códigos</strong> y el Pack de 5 stickers otorga <strong>5 códigos</strong>. A mayor cantidad de stickers adquiridos, mayores probabilidades de ganar.</p>
+          <p>Los códigos son únicos, intransferibles y están asociados al nombre y correo electrónico del comprador. No se aceptarán transferencias de códigos entre personas.</p>
+          <p>El sorteo se realizará en la fecha indicada en el sitio web, de manera pública a través de las redes sociales de MotoVibes. El ganador será contactado mediante el correo electrónico proporcionado en la compra.</p>
+          <p>MotoVibes se reserva el derecho de modificar la fecha del sorteo con aviso previo a través de sus redes sociales.</p>
+        </section>
+
+        <section class="terms-section">
+          <h3>2. Política de privacidad de datos</h3>
+          <p>MotoVibes recopila los siguientes datos personales con el único fin de gestionar la compra y la participación en el sorteo: nombre completo, correo electrónico, número de teléfono y dirección.</p>
+          <p>Los datos recopilados <strong>no serán vendidos, cedidos ni compartidos</strong> con terceros bajo ninguna circunstancia, salvo obligación legal.</p>
+          <p>La información se almacena de forma segura en servidores protegidos. El comprador puede solicitar la eliminación de sus datos en cualquier momento escribiendo a <strong>motovibescl@gmail.com</strong>.</p>
+          <p>Al completar la compra, el usuario autoriza a MotoVibes a enviarle comunicaciones relacionadas con el sorteo y futuros concursos. Esta autorización puede revocarse en cualquier momento.</p>
+          <p>MotoVibes cumple con la Ley N° 19.628 sobre Protección de la Vida Privada de Chile.</p>
+        </section>
+
+      </div>
+      <div class="terms-footer">
+        <button class="terms-accept" onclick="aceptarTerminos()">Entendido ✓</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function abrirTerminos() {
+      document.getElementById('terms-overlay').classList.add('open')
+      document.body.style.overflow = 'hidden'
+    }
+    function cerrarTerminos() {
+      document.getElementById('terms-overlay').classList.remove('open')
+      document.body.style.overflow = ''
+    }
+    function aceptarTerminos() {
+      const checkbox = document.querySelector('input[name="terms"]')
+      if (checkbox) checkbox.checked = true
+      cerrarTerminos()
+    }
+    document.getElementById('terms-overlay').addEventListener('click', function(e) {
+      if (e.target === this) cerrarTerminos()
+    })
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') cerrarTerminos()
+    })
+  </script>
 </body>
 </html>
